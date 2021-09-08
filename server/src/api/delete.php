@@ -1,4 +1,6 @@
 <?php
+    require_once "../classes/SQLConnection.php";
+
     $json = file_get_contents("php://input");
     $contents = json_decode($json, true);
     
