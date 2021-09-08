@@ -2,15 +2,15 @@
     require_once '../classes/SQLConnection.php';
 
     $conn = new SQLConnection();
+    $result = ["result" => false];
     if (!$conn->connect())
     {
-        echo json_encode(["result" => false]);
+        echo json_encode($result);
         return;
     }
 
-    $result = ["result" => true];
     $stmt = $conn->query("SELECT last_name, first_name FROM users;");
-    $stmt->execute();
+    $result["result"] = $stmt->execute();
     $list = $stmt->fetchAll();
     $result["list"] = $list;
 

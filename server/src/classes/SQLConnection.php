@@ -50,7 +50,12 @@
         // 実行
         public function execute()
         {
-            $this->prepare->execute();
+            try
+            {
+                $this->prepare->execute();
+            }
+            catch (PDOException $e) { return false; }
+            return true;
         }
 
         // フェッチ
