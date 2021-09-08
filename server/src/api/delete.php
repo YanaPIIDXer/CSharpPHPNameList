@@ -11,6 +11,11 @@
     }
     
     $conn = new SQLConnection();
+    if (!$conn->connect())
+    {
+        echo json_encode($result);
+        return;
+    }
     $stmt = $conn->query("DELETE FROM users WHERE id = :id;");
     $stmt->bind(":id", $id, PDO::PARAM_INT);
 

@@ -15,6 +15,11 @@
     }
     
     $conn = new SQLConnection();
+    if (!$conn->connect())
+    {
+        echo json_encode($result);
+        return;
+    }
     $stmt = $conn->query("INSERT INTO users(last_name, first_name) VALUES(:last_name, :first_name);");
     $stmt->bind(":last_name", $last_name, PDO::PARAM_STR);
     $stmt->bind(":first_name", $first_name, PDO::PARAM_STR);
