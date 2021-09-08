@@ -47,15 +47,77 @@ namespace NameListClient
 			List<User> userList = null;
 			using (var client = new HttpClient())
 			{
-				var response = await client.GetAsync(string.Format(ENDPOINT_FORMAT, "list"));
-				var responseStr = await response.Content.ReadAsStringAsync();
-				FetchUserListResult result = JsonConvert.DeserializeObject<FetchUserListResult>(responseStr);
-				if (result.result)
+				try
 				{
-					userList = new List<User>(result.list);
+					var response = await client.GetAsync(string.Format(ENDPOINT_FORMAT, "list"));
+					var responseStr = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<FetchUserListResult>(responseStr);
+					if (result.result)
+					{
+						userList = new List<User>(result.list);
+					}
 				}
+				catch { return null; }
 			}
 			return userList;
+		}
+
+		/// <summary>
+		/// ユーザ登録リクエスト
+		/// </summary>
+		[JsonObject]
+		class InsertUserRequest
+		{
+			/// <summary>
+			/// 名前
+			/// </summary>
+			[JsonProperty("last_name")]
+			public string lastName = "";
+
+			/// <summary>
+			/// 苗字
+			/// </summary>
+			[JsonProperty("first_name")]
+			public string firstName = "";
+		}
+
+		/// <summary>
+		/// 実行結果
+		/// </summary>
+		class CommandResult
+		{
+			/// <summary>
+			/// 結果
+			/// </summary>
+			[JsonProperty("result")]
+			public bool result = false;
+		}
+
+		/// <summary>
+		/// ユーザ追加
+		/// </summary>
+		/// <param name="lastName">名前</param>
+		/// <param name="firstName">苗字</param>
+		/// <returns>結果</returns>
+		public static async Task<bool> InsertUser(string lastName, string firstName)
+		{
+			bool bResult = false;
+			using (var client = new HttpClient())
+			{
+				InsertUserRequest request = new InsertUserRequest();
+				request.lastName = lastName;
+				request.firstName = firstName;
+				var jsonText = JsonConvert.SerializeObject(request);
+				try
+				{
+					var response = await client.PostAsync(string.Format(ENDPOINT_FORMAT, "insert"), new StringContent(jsonText, Encoding.UTF8, "application/json"));
+					var responseStr = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<CommandResult>(responseStr);
+					bResult = result.result;
+				}
+				catch { return false; }
+			}
+			return bResult;
 		}
 	}
 }
