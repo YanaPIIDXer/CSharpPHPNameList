@@ -47,7 +47,7 @@
             $this->prepare->bindValue($param, $value, $type);
         }
 
-        // 実行のみ
+        // 実行
         public function execute()
         {
             $this->prepare->execute();
@@ -56,7 +56,6 @@
         // フェッチ
         public function fetchAll()
         {
-            $this->prepare->execute();
             return $this->prepare->fetchAll(PDO::FETCH_ASSOC);
         }
     }
