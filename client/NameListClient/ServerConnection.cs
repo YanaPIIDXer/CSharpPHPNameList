@@ -119,5 +119,60 @@ namespace NameListClient
 			}
 			return bResult;
 		}
+
+
+		/// <summary>
+		/// ユーザ情報更新リクエスト
+		/// </summary>
+		[JsonObject]
+		class UpdateUserRequest
+		{
+			/// <summary>
+			/// ID
+			/// </summary>
+			[JsonProperty("id")]
+			public long id = 0;
+
+			/// <summary>
+			/// 名前
+			/// </summary>
+			[JsonProperty("last_name")]
+			public string lastName = "";
+
+			/// <summary>
+			/// 苗字
+			/// </summary>
+			[JsonProperty("first_name")]
+			public string firstName = "";
+		}
+
+		/// <summary>
+		/// ユーザ情報更新
+		/// </summary>
+		/// <param name="id">対象ＩＤ</param>
+		/// <param name="lastName">名前</param>
+		/// <param name="firstName">苗字</param>
+		/// <returns>結果</returns>
+		public static async Task<bool> UpdateUser(long id, string lastName, string firstName)
+		{
+			bool bResult = false;
+			using (var client = new HttpClient())
+			{
+				var request = new UpdateUserRequest();
+				request.id = id;
+				request.lastName = lastName;
+				request.firstName = firstName;
+				var jsonText = JsonConvert.SerializeObject(request);
+				try
+				{
+					var response = await client.PostAsync(string.Format(ENDPOINT_FORMAT, "update"), new StringContent(jsonText, Encoding.UTF8, "application/json"));
+					var responseStr = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<CommandResult>(responseStr);
+					bResult = result.result;
+				}
+				catch { return false; }
+			}
+			return bResult;
+		}
 	}
 }

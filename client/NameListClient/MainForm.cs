@@ -42,5 +42,27 @@ namespace NameListClient
 
 			await FetchAndUpdateUserList();
 		}
+
+		private void userList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			userPanel.Enabled = (userList.SelectedIndex > 0);
+			if (!userPanel.Enabled) { return; }
+			User user = userList.SelectedItem as User;
+			updateLastNameTextBox.Text = user.LastName;
+			updateFirstNameTextBox.Text = user.FirstName;
+		}
+
+		private async void updateButton_Click(object sender, EventArgs e)
+		{
+			User user = userList.SelectedItem as User;
+			bool bResult = await ServerConnection.UpdateUser(user.Id, updateLastNameTextBox.Text, updateFirstNameTextBox.Text);
+			if (!bResult)
+			{
+				MessageBox.Show("更新に失敗しました。");
+				return;
+			}
+
+			await FetchAndUpdateUserList();
+		}
 	}
 }
