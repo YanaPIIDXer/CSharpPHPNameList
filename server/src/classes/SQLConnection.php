@@ -47,6 +47,12 @@
             $this->prepare->bindValue($param, $value, $type);
         }
 
+        // 実行のみ
+        public function execute()
+        {
+            $this->prepare->execute();
+        }
+
         // フェッチ
         public function fetchAll()
         {
