@@ -1,7 +1,7 @@
 ﻿
 namespace NameListClient
 {
-	partial class Form1
+	partial class MainForm
 	{
 		/// <summary>
 		/// 必要なデザイナー変数です。
@@ -29,13 +29,33 @@ namespace NameListClient
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.userList = new System.Windows.Forms.ListBox();
+			this.SuspendLayout();
+			// 
+			// userList
+			// 
+			this.userList.FormattingEnabled = true;
+			this.userList.ItemHeight = 12;
+			this.userList.Location = new System.Drawing.Point(40, 24);
+			this.userList.Name = "userList";
+			this.userList.Size = new System.Drawing.Size(592, 316);
+			this.userList.TabIndex = 0;
+			// 
+			// MainForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Text = "Form1";
+			this.Controls.Add(this.userList);
+			this.Name = "MainForm";
+			this.Text = "簡単な名簿システム";
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
+
+		private System.Windows.Forms.ListBox userList;
 	}
 }
 
