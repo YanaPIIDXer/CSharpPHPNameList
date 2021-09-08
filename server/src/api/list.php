@@ -2,7 +2,16 @@
     require_once '../classes/SQLConnection.php';
 
     $conn = new SQLConnection();
-    $message = $conn->connect() ? "OK" : "Fuck";
+    if (!$conn->connect())
+    {
+        echo json_encode(["result" => false]);
+        return;
+    }
 
-    echo json_encode(["message" => $message]);
+    $result = ["result" => true];
+    $stmt = $conn->query("SELECT last_name, first_name FROM users;");
+    $list = $stmt->fetchAll();
+    $result["list"] = $list;
+
+    echo json_encode($result);
 ?>
