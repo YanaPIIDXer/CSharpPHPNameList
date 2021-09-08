@@ -37,6 +37,7 @@ namespace NameListClient
 			this.updateLastNameTextBox = new System.Windows.Forms.TextBox();
 			this.updateFirstNameTextBox = new System.Windows.Forms.TextBox();
 			this.updateButton = new System.Windows.Forms.Button();
+			this.deleteButton = new System.Windows.Forms.Button();
 			this.userPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -76,6 +77,7 @@ namespace NameListClient
 			// 
 			// userPanel
 			// 
+			this.userPanel.Controls.Add(this.deleteButton);
 			this.userPanel.Controls.Add(this.updateButton);
 			this.userPanel.Controls.Add(this.updateFirstNameTextBox);
 			this.userPanel.Controls.Add(this.updateLastNameTextBox);
@@ -108,6 +110,16 @@ namespace NameListClient
 			this.updateButton.UseVisualStyleBackColor = true;
 			this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
 			// 
+			// deleteButton
+			// 
+			this.deleteButton.Location = new System.Drawing.Point(76, 223);
+			this.deleteButton.Name = "deleteButton";
+			this.deleteButton.Size = new System.Drawing.Size(75, 23);
+			this.deleteButton.TabIndex = 5;
+			this.deleteButton.Text = "消去";
+			this.deleteButton.UseVisualStyleBackColor = true;
+			this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -138,6 +150,7 @@ namespace NameListClient
 		private System.Windows.Forms.Button updateButton;
 		private System.Windows.Forms.TextBox updateFirstNameTextBox;
 		private System.Windows.Forms.TextBox updateLastNameTextBox;
+		private System.Windows.Forms.Button deleteButton;
 	}
 }
 

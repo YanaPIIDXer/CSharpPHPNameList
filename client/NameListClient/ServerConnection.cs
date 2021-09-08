@@ -174,5 +174,44 @@ namespace NameListClient
 			}
 			return bResult;
 		}
+
+		/// <summary>
+		/// ユーザ消去リクエスト
+		/// </summary>
+		[JsonObject]
+		class DeleteUserRequest
+		{
+			/// <summary>
+			/// ID
+			/// </summary>
+			[JsonProperty("id")]
+			public long id = 0;
+		}
+
+		/// <summary>
+		/// ユーザ消去
+		/// </summary>
+		/// <param name="id">対象ＩＤ</param>
+		/// <returns>結果</returns>
+		public static async Task<bool> DeleteUser(long id)
+		{
+			bool bResult = false;
+			using (var client = new HttpClient())
+			{
+				var request = new DeleteUserRequest();
+				request.id = id;
+				var jsonText = JsonConvert.SerializeObject(request);
+				try
+				{
+					var response = await client.PostAsync(string.Format(ENDPOINT_FORMAT, "delete"), new StringContent(jsonText, Encoding.UTF8, "application/json"));
+					var responseStr = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<CommandResult>(responseStr);
+					bResult = result.result;
+				}
+				catch { return false; }
+
+			}
+			return bResult;
+		}
 	}
 }

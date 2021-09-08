@@ -64,5 +64,18 @@ namespace NameListClient
 
 			await FetchAndUpdateUserList();
 		}
+
+		private async void deleteButton_Click(object sender, EventArgs e)
+		{
+			User user = userList.SelectedItem as User;
+			bool bResult = await ServerConnection.DeleteUser(user.Id);
+			if (!bResult)
+			{
+				MessageBox.Show("削除に失敗しました。");
+				return;
+			}
+
+			await FetchAndUpdateUserList();
+		}
 	}
 }
