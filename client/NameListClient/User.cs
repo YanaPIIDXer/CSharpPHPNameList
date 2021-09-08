@@ -14,6 +14,12 @@ namespace NameListClient
 	public class User
 	{
 		/// <summary>
+		/// ID
+		/// </summary>
+		[JsonProperty("id")]
+		public long Id { get; set; }
+
+		/// <summary>
 		/// 名前
 		/// </summary>
 		[JsonProperty("last_name")]
