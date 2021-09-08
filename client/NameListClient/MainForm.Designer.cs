@@ -49,6 +49,7 @@ namespace NameListClient
 			this.Controls.Add(this.userList);
 			this.Name = "MainForm";
 			this.Text = "簡単な名簿システム";
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.ResumeLayout(false);
 
 		}

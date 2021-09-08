@@ -3,36 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace NameListClient
 {
 	/// <summary>
 	/// ユーザクラス
 	/// </summary>
+	[JsonObject]
 	public class User
 	{
 		/// <summary>
 		/// 名前
 		/// </summary>
-		public string LastName { get { return lastName; } }
-		private string lastName = "";
+		[JsonProperty("last_name")]
+		public string LastName { get; set; }
 
 		/// <summary>
 		/// 苗字
 		/// </summary>
-		public string FirstName { get { return firstName; } }
-		private string firstName = "";
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		/// <param name="lastName">名前</param>
-		/// <param name="firstName">苗字</param>
-		public User(string lastName, string firstName)
-		{
-			this.lastName = lastName;
-			this.firstName = firstName;
-		}
+		[JsonProperty("first_name")]
+		public string FirstName { get; set; }
 
 		/// <summary>
 		/// ToString
@@ -40,7 +31,7 @@ namespace NameListClient
 		/// <returns>「苗字 + " " + 名前」のフォーマットで出力</returns>
 		public override string ToString()
 		{
-			return string.Format("{0} {1}", lastName, firstName);
+			return string.Format("{0} {1}", LastName, FirstName);
 		}
 	}
 }

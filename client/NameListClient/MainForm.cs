@@ -16,5 +16,11 @@ namespace NameListClient
 		{
 			InitializeComponent();
 		}
+
+		private async void MainForm_Load(object sender, EventArgs e)
+		{
+			var users = await ServerConnection.FetchUserList();
+			userList.DataSource = users;
+		}
 	}
 }
